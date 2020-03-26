@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Tenant\Admin\Videos;
 
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\PaymentsExcel;
-use App\Models\Tenant\Bills\Bill;
 use App\Http\Controllers\Controller;
 
 class VideoController extends Controller
