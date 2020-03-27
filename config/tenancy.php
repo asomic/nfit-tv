@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @see https://tenancy.dev
+ * @see https://laravel-tenancy.com
  * @see https://github.com/hyn/multi-tenant
  */
 
@@ -113,9 +113,9 @@ return [
         'auto-delete-tenant-directory' => false,
 
         /**
-         * Time to cache websites in seconds. Set to false to disable.
+         * Time to cache websites in minutes. Set to false to disable.
          */
-        'cache' => 600,
+        'cache' => 10,
     ],
     'hostname' => [
         /**
@@ -126,6 +126,14 @@ return [
          * @warn this must be a FQDN, these have no protocol or path!
          */
         'default' => env('TENANCY_DEFAULT_HOSTNAME'),
+        /**
+         * If you want the multi tenant application to fall back to a default
+         * hostname/website in case the requested hostname was not found
+         * in the database, complete in detail the default hostname.
+         *
+         * @warn this must be a FQDN, these have no protocol or path!
+         */
+        'default-api' => env('TENANCY_DEFAULT_HOSTNAME_API'),
         /**
          * The package is able to identify the requested hostname by itself,
          * disable to get full control (and responsibility) over hostname
@@ -153,7 +161,7 @@ return [
         'abort-without-identified-hostname' => env('TENANCY_ABORT_WITHOUT_HOSTNAME', false),
 
         /**
-         * Time to cache hostnames in seconds. Set to false to disable.
+         * Time to cache hostnames in minutes. Set to false to disable.
          */
         'cache' => 10,
 
@@ -228,9 +236,9 @@ return [
          *
          * @warn specify a valid fully qualified class name.
          */
-        'tenant-seed-class' => false,
-//      eg an admin seeder under `app/Seeders/AdminSeeder.php`:
-//        'tenant-seed-class' => App\Seeders\AdminSeeder::class,
+        'tenant-seed-class' => App\Seeders\DatabaseSeeder::class,
+        //  eg an admin seeder under `app/Seeders/AdminSeeder.php`:
+        // 'tenant-seed-class' => App\Seeders\AdminSeeder::class,
 
         /**
          * Automatically generate a tenant database based on the random id of the

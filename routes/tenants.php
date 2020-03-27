@@ -6,7 +6,7 @@
 Route::middleware(['web', 'auth'])->namespace('App\Http\Controllers\Tenant')
      ->group(function () {
 
-    // Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@index')->name('home');
 
     Route::get('/cn', 'HomeController@cn');
 

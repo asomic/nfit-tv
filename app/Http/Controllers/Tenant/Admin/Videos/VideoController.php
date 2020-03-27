@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tenant\Admin\Videos;
 
+use Vimeo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,7 @@ class VideoController extends Controller
      */
     public function index()
     {
-        return view('admin.videos.index');
+        return view('tenant.admin.videos.index');
     }
 
     /**
@@ -22,8 +23,23 @@ class VideoController extends Controller
      *
      *  @return type
      */
-    public function upload()
+    public function store(Request $request)
     {
-        // code
+        if ($request->hasFile('video')) {
+            $file = $request->file('video');
+            $fileName = strtolower(time() . '-' . $file->getClientOriginalName());
+            $file->move('videos/', $fileName);
+            $video = Vimeo::upload(
+                'videos/' . $fileName,
+                ['title' => $request->title]
+            );
+
+            if ($video) {
+                unlink(public_path('videos/' . $fileName));
+            }
+            return back()->with('success', 'Video Subido correctamente');
+        }
+
+        return back()->with('warning', 'Debe elegir un archivo para subir');
     }
 }
